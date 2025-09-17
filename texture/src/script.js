@@ -16,13 +16,29 @@ renderer
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('transparent')
 
+const loadingManager = new THREE.LoadingManager()
 
+loadingManager.onStart = () =>{
+  console.log('starting...')
+}
+
+loadingManager.onProgress = () =>{
+  console.log('progressing...')
+}
+
+
+loadingManager.onError = () =>{
+  console.log('error...')
+}
+
+const texture = new THREE.TextureLoader(loadingManager)
+const textureColor = texture.load('texture/color.jpg')
 
 // const axesHelper = new THREE.AxesHelper();
 // scene.add(axesHelper);
 
 const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
-const material = new THREE.MeshBasicMaterial({color: "red"});
+const material = new THREE.MeshBasicMaterial({map:textureColor});
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
